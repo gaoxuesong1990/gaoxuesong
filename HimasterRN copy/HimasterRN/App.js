@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
     SafeAreaView,
@@ -28,7 +28,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from "@react-navigation/stack";
 
-const Home1: () => React$Node = () => {
+const HomePage: () => React$Node = () => {
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -76,9 +76,9 @@ const Home1: () => React$Node = () => {
     );
 };
 
-function Detail1() {
+function DetailPage({ navigation }) {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
             <Button
                 title="Jump to DetailTab2"
                 onPress={() => navigation.navigate('DetailTab2')}
@@ -87,14 +87,37 @@ function Detail1() {
 
     );
 }
+
+function DetailPage2() {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Button
+                title="Primary"
+                onPress={() => navigation.navigate('XXX')}
+            />
+        </View>
+    );
+}
+
+const Hoo = createStackNavigator();
+
+function Lala() {
+    return (
+            <Hoo.Navigator initialRouteName="DetailTab1" >
+                <Hoo.Screen name="DetailTab1" component={DetailPage} />
+                <Hoo.Screen name="DetailTab2" component={DetailPage2} />
+            </Hoo.Navigator>
+    );
+}
+
 const Stack = createBottomTabNavigator();
 
 function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={Home1} />
-                <Stack.Screen name="Detail" component={Detail1} />
+                <Stack.Screen name="Home" component={HomePage} />
+                <Stack.Screen name="Detail" component={Lala} />
             </Stack.Navigator>
         </NavigationContainer>
     );
